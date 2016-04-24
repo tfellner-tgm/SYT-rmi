@@ -2,12 +2,10 @@
 .*
 !.gitignore
 
-# ignore Eclipse and Intellij binaries + Gradle build dir
+# ignore Eclipse or Intellij binaries
 /bin
 /out
-/build
 
 # ignore Intellij Project files
-*.iml
 *.ipr
 *.iws
