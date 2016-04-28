@@ -3,7 +3,8 @@
 !.gitignore
 
 # ignore Eclipse or Intellij binaries
-/bin
+/tutorial/bin
+/commandPattern/bin
 /out
 
 # ignore Intellij Project files
