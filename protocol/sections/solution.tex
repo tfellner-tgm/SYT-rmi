@@ -12,13 +12,13 @@ Zu finden ist das Tutorial entweder auf meinem Github \url{https://github.com/tf
 Ant ist ein Buildtool, welches durch die \texttt{build.xml} definiert wird.\\
 Dieses File kann von eclipse oder Intellij generiert werden und besteht dann aus vielen Properties und Targets.
 Die Properties bestehen als Voraussetzung f\"ur den build (z.B. Java Version, Binary Pfad ...)
-Die Targets k\"onnen \"uber die Commandline ausgef\"uhr werden mittels \texttt{ant [target]}. Der \texttt{build} target kompelliert die Souces zu Binaries, welche dann von anderen Targets verwendet werden kann. Hier k\"onnen auch Commandline-Arguments definiert werden
+Die Targets k\"onnen \"uber die Commandline ausgef\"uhrt werden mittels \texttt{ant [target]}. Der \texttt{build} target kompelliert die Sources zu Binaries, welche dann von anderen Targets verwendet werden k\"onnen. Hier k\"onnen auch Commandline-Arguments definiert werden
 
 \subsubsection{RMI}
 
-Konkret in dem Beispiel gibt es die Targets \texttt{engine} und \texttt{compute}, wobei Engine quasi dem Server und Compute der Client ist.
+Konkret in dem Beispiel gibt es die Targets \texttt{engine} und \texttt{compute}, wobei Engine quasi der Server und Compute der Client ist.
 
-Hier der wichtigste Code der Engine.
+Hier der wichtigste Code der Engine:
 
 \begin{lstlisting}[style=Java, caption=Engine]
 Compute engine = new ComputeEngine();
@@ -31,7 +31,7 @@ Zuerst wird hier das Objekt engine erstellt. Dieses Objekt dient Compute dazu
 eine Task auszuf\"uhren.
 Danach wird das engine Objekt exportiert und im stub gespeichert. \\
 \texttt{createRegistry(port)} erstellt eine Registry, in welcher diese stubs dann mit
-dem bind oder rebind (bind w\"urde noch \"uberpr\"ufen ob der Name schon vergeben ist) mittels eines Names freigegeben werden k\"onnen.
+dem bind oder rebind (bind w\"urde noch \"uberpr\"ufen ob der Name schon vergeben ist) mittels eines Namen freigegeben werden k\"onnen.
 
 Die Klasse ComputePi verwendet \texttt{getRegistry(port)} um sich in die Registry
 einzutragen und holt sich dann das Compute Objekt mittels \texttt{registry.lookup(name)}
@@ -41,7 +41,7 @@ Registry registry = LocateRegistry.getRegistry(1099);
 Compute comp = (Compute) registry.lookup("Compute");
 \end{lstlisting}
 
-Wenn nun die Engine ausgef\"uhrt wird bekommen man die Exception
+Wenn nun die Engine ausgef\"uhrt wird, bekommt man die Exception
 
 \textcolor{red}{Java.security.AccessControlException: access denied}
 
@@ -49,7 +49,7 @@ Wenn nun die Engine ausgef\"uhrt wird bekommen man die Exception
 
 \subsubsection{Java Policy}
 
-RMI braucht noch bestimmte Permissions. Um dem Programm diese zu geben, muss die Datein \texttt{java.policy} unter dem Verzeichnis der JDK \texttt{/usr/lib/jvm/\{java-version\}/jre/lib/security/java.policy} ins Homeverzeichnis (\texttt{/home/\{name\}/.java.policy}) kopiert werden, wobei bei diesem Block\\
+RMI braucht noch bestimmte Permissions. Um dem Programm diese zu geben, muss die Datei \texttt{java.policy} unter dem Verzeichnis der JDK \texttt{/usr/lib/jvm/\{java-version\}/jre/lib/security/java.policy} ins Homeverzeichnis (\texttt{/home/\{name\}/.java.policy}) kopiert werden, wobei bei diesem Block\\
 
 \begin{lstlisting}[caption=java.policy]
 grant codeBase "file:${{java.ext.dirs}}/*" {
@@ -57,7 +57,7 @@ grant codeBase "file:${{java.ext.dirs}}/*" {
 };
 \end{lstlisting}
 
-der Ausdruck \texttt{\$\{\{java.ext.dirs\}\}/*} dann noch zu \texttt{/home/\{name\}/-} ge\"andert werden muss. Dies sagt aus, dass alle Datein (-) unter dem Homeverzeichnis diese permission haben. In diesem Fall ist alles erlaubt, wegen des Ausdrucks \texttt{java.security.AllPermission}.
+der Ausdruck \texttt{\$\{\{java.ext.dirs\}\}/*} dann noch zu \texttt{/home/\{name\}/-} ge\"andert werden muss. Dies sagt aus, dass alle Dateien (-) unter dem Homeverzeichnis diese permission haben. In diesem Fall ist alles erlaubt, wegen des Ausdrucks \texttt{java.security.AllPermission}.
 
 \clearpage
 
@@ -65,7 +65,7 @@ der Ausdruck \texttt{\$\{\{java.ext.dirs\}\}/*} dann noch zu \texttt{/home/\{nam
 
 \subsubsection{Command Pattern}
 
-Das Command Pattern ist realisiert durch 2 Interfaces und deren dazugeh\"origen Klassen.
+Das Command Pattern ist realisiert durch 2 Interfaces und deren dazugeh\"orige Klassen.
 
 Das Command Interface gibt vor, dass ein Command die Methode \texttt{execute} besitzen muss.
 
@@ -75,7 +75,7 @@ public interface Command extends Serializable {
 }
 \end{lstlisting}
 
-Das CommandExecuter Interface, wie der Name schon sagt, daf\"ur zust\"andig ist, die gegebenen Commands auszuf\"uhren
+Das CommandExecuter Interface ist, wie der Name schon sagt, daf\"ur zust\"andig ist, die gegebenen Commands auszuf\"uhren
 
 \begin{lstlisting}[style=Java, caption=CommandExecuter Interface]
 public interface CommandExecutor extends Remote {
@@ -127,9 +127,9 @@ public interface Calculation {
 }
 \end{lstlisting}
 
-\texttt{PICalc} ist vom Tutorial \"ubernommen und umgeschrieben, um mit dem Interace zu funktionieren.\\
+\texttt{PICalc} ist vom Tutorial \"ubernommen und umgeschrieben, um mit dem Interface zu funktionieren.\\
 \texttt{EulerCalc} berechnet die Eulersche Zahl e mit einer bestimmten Genauigkeit.
-Die Formel f\"ur die Eulersche Zahl \(\sum \limits_{k=0}^n e = \frac{1}{k!}\) wobei n die Genauigkeit ist.
+Die Formel f\"ur die Eulersche Zahl ist \(\sum \limits_{k=0}^n e = \frac{1}{k!}\) wobei n die Genauigkeit ist.
 
 \subsubsection{CalculationCommand}
 
@@ -161,10 +161,11 @@ public class CalculationCommand implements Command, Serializable {
 }
 \end{lstlisting}
 
-Der Konstrukter bekommt 2 Objekte des Typen Callback und Calculation und wenn \texttt{execute()} aufgerufen wird, werden die Methoden des Interfaces aufgerufen.
-Zuerst wird Berechnet, dann die Nummer des Callbacks zum Resultat gesetzt und dann dieses ausgegeben.
+Der Konstruktor bekommt 2 Objekte der Typen Callback und Calculation und wenn \texttt{execute()} aufgerufen wird, werden die Methoden des Interfaces aufgerufen.
+Zuerst wird berechnet, dann die Nummer des Callbacks zum Resultat gesetzt und dann dieses ausgegeben.
 
-Um das Command zu erstellen muss der vorhin erstellte callback Stub mitgegeben werden und eine neue Calculation erstellt werden, hier beide M\"oglichkeiten des Programms
+Um das Command zu erstellen muss der vorhin erstellte callback Stub mitgegeben werden und eine neue Calculation erstellt werden\\
+Hier beide M\"oglichkeiten des Programms:
 
 \begin{lstlisting}[style=Java, caption=Command Erstellung]
 Command calcPi = new CalculationCommand(cbStub, new PICalc(Integer.parseInt(args[0])));
@@ -173,7 +174,7 @@ Command calcEuler = new CalculationCommand(cbStub, new EulerCalc(args[0]));
 
 \subsubsection{Programmstruktur}
 
-Hier die Programmstruktur nochmal als ganzes in einem UML Diagramm dargestellt.\\
+Hier die Programmstruktur nochmal als ganzes in einem UML Diagramm dargestellt:\\
 Die Verbindung von \texttt{Client} zu \texttt{ServerService} soll darstellen, dass das Objekt \"uber die Registry geholt wird.
 
 \begin{figure}[!h]
