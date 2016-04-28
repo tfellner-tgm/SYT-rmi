@@ -3,6 +3,13 @@ package calculation;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * PI class from https://github.com/mborko/code-examples/blob/master/java/rmiTutorial/src/client/Pi.java
+ * Written to fit the Calculation Interface
+ *
+ * @author mborko, tfellner
+ * @version 28.4.2016
+ */
 public class PICalc implements Calculation, Serializable {
 
     private static final long serialVersionUID = 227L;
@@ -25,6 +32,9 @@ public class PICalc implements Calculation, Serializable {
      */
     private final int digits;
 
+    /**
+     * The resulting pi
+     */
     private BigDecimal pi;
 
 

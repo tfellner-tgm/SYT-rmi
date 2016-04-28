@@ -55,6 +55,7 @@
     </target>
     <target depends="build" name="Client">
         <java classname="client.Client" failonerror="true" fork="yes">
+            <arg value="200"/>
             <classpath refid="rmiCommandPattern.classpath"/>
         </java>
     </target>
