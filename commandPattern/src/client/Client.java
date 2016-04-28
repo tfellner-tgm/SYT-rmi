@@ -47,7 +47,7 @@ public class Client {
 
             //Setup Commands for Calculating Pi and Euler's number
             Command calcPi = new CalculationCommand(cbStub, new PICalc(Integer.parseInt(args[0])));
-            Command calcEuler = new CalculationCommand(cbStub, new EulerCalc(300));
+            Command calcEuler = new CalculationCommand(cbStub, new EulerCalc(args[0]));
 
             //execute the Commands
             uRemoteObject.executeCommand(calcPi);

@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
  * @author tfellner
  * @version 27.4.2016
  */
-public interface Callback<T> extends Remote{
+public interface Callback<T> extends Remote, Serializable {
     public void set(T argument) throws RemoteException;
     public void print() throws RemoteException;
     public T receive() throws RemoteException;
