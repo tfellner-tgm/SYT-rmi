@@ -7,8 +7,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 import calculation.PICalc;
 import callback.Callback;
-import callback.CallbackPi;
-import remoteService.DoSomethingService;
+import callback.CallbackBigDecimal;
+import remoteService.CommandExecutor;
 import server.commands.*;
 
 public class Client {
@@ -20,28 +20,23 @@ public class Client {
 		try {
 			Registry registry = LocateRegistry.getRegistry(1234);
 
-			DoSomethingService uRemoteObject = (DoSomethingService) registry.lookup("Service");
+			CommandExecutor uRemoteObject = (CommandExecutor) registry.lookup("Service");
 			System.out.println("Service found");
 
-			Command rc = new RegisterCommand();
-			Command lc = new LoginCommand();
-            Command pi = new PiCommand(new Integer(400));
 
-			uRemoteObject.doSomething(rc);
-			uRemoteObject.doSomething(lc);
-            uRemoteObject.doSomething(pi);
-
-
-            Callback cb = new CallbackPi();
+            Callback cb = new CallbackBigDecimal();
             Callback cbStub = (Callback) UnicastRemoteObject.exportObject(cb, 0);
 
+            Command calcPi = new CalculationCommand(cbStub, new PICalc(2500));
 
-            Command calcPi = new CalculationCommand(cbStub, new PICalc(300));
+            uRemoteObject.executeCommand(calcPi);
 
-            uRemoteObject.doSomething(calcPi);
+            while ( System.in.read() != '\n' );
+            UnicastRemoteObject.unexportObject(cb, true);
 
 		} catch (RemoteException re) {
 			System.err.println("Service not found?" + " Check your RMI-Registry!");
+            System.err.println(re.getMessage());
 			System.exit(1);
 		} catch (Exception e) {
 			System.err.println("Service exception:");
@@ -49,4 +44,12 @@ public class Client {
 			System.exit(1);
 		}
 	}
+
+    public static int factorial(int n) {
+        int fact = 1; // this  will be the result
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
 }

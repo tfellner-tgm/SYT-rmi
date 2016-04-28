@@ -1,8 +1,5 @@
 package calculation;
 
-import callback.Callback;
-import server.commands.Command;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 

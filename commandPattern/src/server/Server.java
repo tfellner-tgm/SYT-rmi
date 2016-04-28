@@ -5,7 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import remoteService.DoSomethingService;
+import remoteService.CommandExecutor;
 
 public class Server {
 
@@ -19,7 +19,7 @@ public class Server {
 		}
 		try {
 			ServerService uRemoteObject = new ServerService();
-			DoSomethingService stub = (DoSomethingService) UnicastRemoteObject.exportObject(uRemoteObject, 0);
+			CommandExecutor stub = (CommandExecutor) UnicastRemoteObject.exportObject(uRemoteObject, 0);
 			Registry registry = LocateRegistry.createRegistry(1234);
 			registry.rebind("Service", stub);
 			System.out.println("Service bound! Press Enter to terminate ...");
