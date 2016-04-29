@@ -169,7 +169,7 @@ Hier beide M\"oglichkeiten des Programms:
 
 \begin{lstlisting}[style=Java, caption=Command Erstellung]
 Command calcPi = new CalculationCommand(cbStub, new PICalc(Integer.parseInt(args[0])));
-Command calcEuler = new CalculationCommand(cbStub, new EulerCalc(args[0]));
+Command calcEuler = new CalculationCommand(cbStub, new EulerCalc(Integer.parseInt(args[0])));
 \end{lstlisting}
 
 \subsubsection{Programmstruktur}

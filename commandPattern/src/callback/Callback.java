@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import java.io.Serializable;
+
 /**
  * Interface for Callbacks of any datatype.
  *
